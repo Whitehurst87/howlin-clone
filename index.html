@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>The Howlin' Wolf | Craft Cocktails & Vibes in Fresno</title>
+  <meta name="description" content="The Howlin' Wolf is a craft cocktail bar in Fresno's Tower District. Signature drinks, live events, and a speakeasy atmosphere.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  
+  <!-- Font Awesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'wolf-green': '#2D3921', // Dark forest green
+            'wolf-gold': '#A68946',  // Muted gold accent
+            'wolf-cream': '#F9F4E8', // Light cream background
+            'wolf-dark': '#1a2213',
+          },
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+            serif: ['Limelight', 'cursive'],
+          },
+          animation: {
+            'fadeIn': 'fadeIn 0.5s ease-out forwards',
+            'slideUp': 'slideUp 0.5s ease-out forwards',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F9F4E8;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #A68946;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2D3921;
+    }
+
+    .vintage-title {
+      font-family: 'Limelight', cursive;
+      letter-spacing: 0.05em;
+    }
+    
+    /* Hero Slideshow */
+    .slideshow-container { position: relative; }
+    .slideshow-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: scale(1.05);
+      transition: opacity 1.5s ease-in-out, transform 6s ease-out;
+    }
+    .slideshow-slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+    
+    /* Nav Glassmorphism */
+    #main-nav {
+        transition: all 0.3s ease-in-out;
+    }
+    .nav-scrolled {
+      background-color: rgba(45, 57, 33, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      padding-top: 0.75rem !important;
+      padding-bottom: 0.75rem !important;
+    }
+    
+    /* Smooth Scroll Behavior */
+    html {
+        scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body class="bg-wolf-cream text-wolf-green antialiased selection:bg-wolf-gold selection:text-white" id="top">
+
+  <!-- BEGIN: Navigation -->
+  <nav class="fixed top-0 w-full z-50 transition-all duration-300 py-4 border-b border-white/10" id="main-nav">
+    <div class="container mx-auto px-6 flex justify-between items-center">
+      <a href="#top" class="text-wolf-cream font-serif text-xl md:text-2xl tracking-widest hover:text-wolf-gold transition-colors flex items-center gap-2">
+        <img src="images/THW-logo-white.webp" alt="The Howlin' Wolf Logo" class="h-8 md:h-10 w-auto md:hidden" id="scrolled-logo">
+        <img src="images/THW-logo-white.webp" alt="The Howlin' Wolf Logo" class="h-8 md:h-10 w-auto hidden md:block" id="desktop-logo">
+      </a>
+      
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex gap-8 items-center">
+        <a href="#about" class="text-wolf-cream/90 hover:text-wolf-gold text-sm font-bold uppercase tracking-wider transition-colors relative group">
+          About
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-wolf-gold transition-all group-hover:w-full"></span>
+        </a>
+        <a href="#menu" class="text-wolf-cream/90 hover:text-wolf-gold text-sm font-bold uppercase tracking-wider transition-colors relative group">
+          Menu
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-wolf-gold transition-all group-hover:w-full"></span>
+        </a>
+        <a href="#events" class="text-wolf-cream/90 hover:text-wolf-gold text-sm font-bold uppercase tracking-wider transition-colors relative group">
+          Events
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-wolf-gold transition-all group-hover:w-full"></span>
+        </a>
+        <a href="#contact" class="bg-wolf-gold text-wolf-green px-5 py-2 rounded-sm font-bold uppercase text-xs tracking-widest hover:bg-white transition-all transform hover:-translate-y-0.5 shadow-lg">
+          Reserve
+        </a>
+      </div>
+      
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden text-wolf-gold text-2xl p-2" id="mobile-menu-toggle" aria-label="Toggle Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    
+    <!-- Mobile Menu Dropdown -->
+    <div class="hidden md:hidden bg-wolf-green border-t border-wolf-gold/20 absolute w-full left-0 shadow-xl" id="mobile-menu">
+      <div class="flex flex-col p-6 space-y-4 text-center">
+        <a href="#about" class="text-wolf-cream hover:text-wolf-gold font-bold uppercase tracking-widest py-2 border-b border-white/10">About</a>
+        <a href="#menu" class="text-wolf-cream hover:text-wolf-gold font-bold uppercase tracking-widest py-2 border-b border-white/10">Menu</a>
+        <a href="#events" class="text-wolf-cream hover:text-wolf-gold font-bold uppercase tracking-widest py-2 border-b border-white/10">Events</a>
+        <a href="#contact" class="text-wolf-cream hover:text-wolf-gold font-bold uppercase tracking-widest py-2">Contact</a>
+      </div>
+    </div>
+  </nav>
+  <!-- END: Navigation -->
+
+  <!-- BEGIN: Hero Section -->
+  <header class="relative h-screen flex items-center justify-center overflow-hidden">
+    <!-- Background Image Slideshow -->
+    <div class="absolute inset-0 z-0">
+      <div class="slideshow-container w-full h-full">
+        <!-- Added generic gradient overlay for better text readability -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-wolf-green z-10 pointer-events-none"></div>
+        
+        <div class="slideshow-slide active">
+          <img alt="Atmospheric bar interior" class="w-full h-full object-cover" src="images/ASP02559-scaled-e1744874211953.webp"/>
+        </div>
+        <div class="slideshow-slide">
+          <img alt="Vintage style bar photo" class="w-full h-full object-cover" src="images/ASP02602-scaled-e1744873912494.webp"/>
+        </div>
+        <div class="slideshow-slide">
+          <img alt="Live entertainment at The Howlin' Wolf" class="w-full h-full object-cover" src="images/ASP02726-scaled-e1745530687720.webp"/>
+        </div>
+        <div class="slideshow-slide">
+          <img alt="Menu presentation at The Howlin' Wolf" class="w-full h-full object-cover" src="images/ASP02753-scaled-e1744874425467.webp"/>
+        </div>
+        <div class="slideshow-slide">
+          <img alt="Additional bar scene" class="w-full h-full object-cover" src="images/ASP04452-scaled-e1745530578383.webp"/>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Hero Content -->
+    <div class="relative z-20 text-center text-white px-6 max-w-4xl mx-auto mt-16 animate-slideUp">
+      <img alt="The Howlin' Wolf Logo" class="w-32 h-32 md:w-48 md:h-48 mx-auto mb-6 drop-shadow-2xl hover:scale-105 transition-transform duration-500" src="images/THW-logo-white.webp"/>
+      
+      <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl mb-4 text-wolf-cream drop-shadow-lg leading-tight">
+        Craft Cocktails<br/><span class="text-wolf-gold">&amp;</span> Good Times
+      </h1>
+      
+      <p class="text-lg md:text-xl font-light tracking-wide mb-10 text-wolf-cream/90 drop-shadow-md max-w-2xl mx-auto">
+        The heartbeat of Fresno's Tower District. <br class="hidden md:block"/>Where vintage soul meets modern spirits.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="#menu" class="bg-wolf-gold text-wolf-green px-8 py-4 rounded-sm font-bold uppercase tracking-widest hover:bg-white hover:text-wolf-green transition-all shadow-lg hover:shadow-wolf-gold/50 transform hover:-translate-y-1">
+          View Menu
+        </a>
+        <a href="#events" class="border-2 border-wolf-cream text-wolf-cream px-8 py-4 rounded-sm font-bold uppercase tracking-widest hover:bg-wolf-cream hover:text-wolf-green transition-all shadow-lg hover:shadow-white/20 transform hover:-translate-y-1">
+          What's On
+        </a>
+      </div>
+      
+      <!-- Social Proof / Hours snippet -->
+      <div class="mt-12 flex justify-center items-center gap-6 text-xs md:text-sm font-medium tracking-widest uppercase opacity-80">
+        <span class="flex items-center gap-2"><i class="fas fa-clock text-wolf-gold"></i> Open Daily 3PM - Late</span>
+        <span class="w-1 h-1 bg-wolf-gold rounded-full"></span>
+        <span class="flex items-center gap-2"><i class="fas fa-map-marker-alt text-wolf-gold"></i> Tower District</span>
+      </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <a href="#about" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce text-wolf-cream/50 hover:text-wolf-gold transition-colors">
+      <i class="fas fa-chevron-down text-2xl"></i>
+    </a>
+  </header>
+  <!-- END: Hero Section -->
+
+  <!-- BEGIN: About Us Section -->
+  <section class="bg-wolf-cream py-20 px-6 md:px-12 text-center" id="about">
+    <div class="max-w-4xl mx-auto">
+      <span class="text-wolf-gold font-bold tracking-[0.2em] uppercase text-sm mb-2 block">Our Story</span>
+      <h2 class="vintage-title text-4xl md:text-5xl font-bold mb-12 text-wolf-green">Welcome to the Den</h2>
+      
+      <div class="grid md:grid-cols-2 gap-12 items-center text-left">
+        <div class="relative group" data-purpose="about-image">
+          <div class="absolute -inset-2 bg-wolf-gold/20 rounded-sm transform rotate-2 group-hover:rotate-1 transition-all duration-500"></div>
+          <img alt="Vintage style bar photo" class="relative w-full grayscale group-hover:grayscale-0 transition-all duration-700 rounded-sm shadow-xl" src="images/Screenshot-2025-01-22-at-19.52.40.png"/>
+        </div>
+        
+        <div class="space-y-6 text-wolf-green text-lg leading-relaxed">
+          <p class="font-medium text-xl italic text-wolf-green/80">
+            "A tribute to a bygone era, reimagined for the modern night owl."
+          </p>
+          <p>
+            Nestled in the historic <span class="font-bold text-wolf-gold">Tower District</span>, The Howlin' Wolf is more than just a bar—it's an escape. We blend the speakeasy mystique of the jazz age with an eccentric, rock 'n' roll edge.
+          </p>
+          <p>
+             Whether you're here for a perfectly balanced Old Fashioned, live local music, or just to soak in the art-deco vibes, we've saved a seat for you.
+          </p>
+          
+          <!-- Expanded Content -->
+          <div id="about-expanded" class="hidden space-y-6 pt-4 border-t border-wolf-green/10">
+            <p>
+              Established in 2021, our space evokes the glamour of big band nights mixed with a dash of whimsy. Think tuxedos meeting tattoos. Our walls feature café racer art and eccentric portraits that watch over you as you sip.
+            </p>
+            <p>
+              <span class="font-bold">The Team:</span> Our bartenders are craftsmen and craftswomen, obsessed with the details—from house-made shrubs to hand-carved ice.
+            </p>
+          </div>
+          
+          <button id="about-toggle" class="group inline-flex items-center gap-2 font-bold text-wolf-gold hover:text-wolf-green transition-colors mt-2">
+            <span>Read More</span>
+            <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- END: About Us Section -->
+
+  <!-- BEGIN: Menu Section -->
+  <section class="bg-wolf-green text-wolf-cream py-24 relative" id="menu">
+    <!-- Decorative background element -->
+    <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-wolf-cream to-wolf-green"></div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="text-center mb-16">
+        <span class="text-wolf-gold font-bold tracking-[0.2em] uppercase text-sm mb-2 block">Handcrafted Libations</span>
+        <h2 class="vintage-title text-5xl md:text-6xl font-bold mb-6">The Menu</h2>
+        <p class="max-w-xl mx-auto text-sm opacity-80 leading-relaxed uppercase tracking-widest px-4 border-l-2 border-r-2 border-wolf-gold/30 py-2">
+          Fresh Juices • House Syrups • Premium Spirits
+        </p>
+      </div>
+
+      <!-- Menu Categories -->
+      <nav class="flex flex-wrap justify-center gap-4 mb-16" data-purpose="menu-navigation">
+        <button class="menu-tab active px-6 py-2 border-b-2 border-wolf-gold text-wolf-gold font-bold uppercase tracking-widest transition-all" data-menu-btn="signature">Signatures</button>
+        <button class="menu-tab px-6 py-2 border-b-2 border-transparent text-white/60 hover:text-white font-bold uppercase tracking-widest transition-all" data-menu-btn="classical-riffs">Riffs</button>
+        <button class="menu-tab px-6 py-2 border-b-2 border-transparent text-white/60 hover:text-white font-bold uppercase tracking-widest transition-all" data-menu-btn="beer-wine">Beer & Wine</button>
+        <button class="menu-tab px-6 py-2 border-b-2 border-transparent text-white/60 hover:text-white font-bold uppercase tracking-widest transition-all" data-menu-btn="spirits">Spirits</button>
+      </nav>
+
+      <!-- Signature Section -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto animate-fadeIn" data-menu-section="signature">
+        <!-- Drink Card 1 -->
+        <div class="bg-wolf-cream text-wolf-green p-8 rounded-sm hover:transform hover:-translate-y-1 transition-all duration-300 shadow-lg group relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-wolf-gold text-white text-xs font-bold px-3 py-1 rounded-bl-sm">$15</div>
+          <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🍸</div>
+          <h4 class="font-serif text-2xl font-bold mb-2 group-hover:text-wolf-gold transition-colors">Lemon Glow</h4>
+          <p class="text-sm font-medium opacity-70 mb-4">Bright • Citrusy • Smooth</p>
+          <div class="w-12 h-0.5 bg-wolf-gold/50 mb-4"></div>
+          <p class="text-sm leading-relaxed font-medium">
+            Milk Washed Lemongrass Vodka, Italicus, Clarified Lemon, House-made Citrus Syrup.
+          </p>
+        </div>
+        
+        <!-- Drink Card 2 -->
+        <div class="bg-wolf-cream text-wolf-green p-8 rounded-sm hover:transform hover:-translate-y-1 transition-all duration-300 shadow-lg group relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-wolf-gold text-white text-xs font-bold px-3 py-1 rounded-bl-sm">$16</div>
+          <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">⏳</div>
+          <h4 class="font-serif text-2xl font-bold mb-2 group-hover:text-wolf-gold transition-colors">Part-Time Lover</h4>
+          <p class="text-sm font-medium opacity-70 mb-4">Complex • Bittersweet • Rich</p>
+          <div class="w-12 h-0.5 bg-wolf-gold/50 mb-4"></div>
+          <p class="text-sm leading-relaxed font-medium">
+            Doc Swinson's Rum, Red Wine Blend, Grenadine, Suze, Turbinado Syrup, Soda.
+          </p>
+        </div>
+
+        <!-- Drink Card 3 -->
+        <div class="bg-wolf-cream text-wolf-green p-8 rounded-sm hover:transform hover:-translate-y-1 transition-all duration-300 shadow-lg group relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-wolf-gold text-white text-xs font-bold px-3 py-1 rounded-bl-sm">$15</div>
+          <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🥂</div>
+          <h4 class="font-serif text-2xl font-bold mb-2 group-hover:text-wolf-gold transition-colors">Morning After</h4>
+          <p class="text-sm font-medium opacity-70 mb-4">Savory • Spicy • Refreshing</p>
+          <div class="w-12 h-0.5 bg-wolf-gold/50 mb-4"></div>
+          <p class="text-sm leading-relaxed font-medium">
+            Tortilla-Washed Tequila, Nixta Elote Liqueur, Salsa Verde, Egg White, Lime, Agave.
+          </p>
+        </div>
+
+        <!-- Drink Card 4 -->
+        <div class="bg-wolf-cream text-wolf-green p-8 rounded-sm hover:transform hover:-translate-y-1 transition-all duration-300 shadow-lg group relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-wolf-gold text-white text-xs font-bold px-3 py-1 rounded-bl-sm">$14</div>
+          <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🥭</div>
+          <h4 class="font-serif text-2xl font-bold mb-2 group-hover:text-wolf-gold transition-colors">Mango Monk</h4>
+          <p class="text-sm font-medium opacity-70 mb-4">Tropical • Creamy • Spiced</p>
+          <div class="w-12 h-0.5 bg-wolf-gold/50 mb-4"></div>
+          <p class="text-sm leading-relaxed font-medium">
+            Old Monk Indian Rum, House-Made Mango Lassi, Lemon. <span class="italic text-xs opacity-80 block mt-1">(Clarified Milk Punch)</span>
+          </p>
+        </div>
+
+        <!-- Drink Card 5 -->
+        <div class="bg-wolf-cream text-wolf-green p-8 rounded-sm hover:transform hover:-translate-y-1 transition-all duration-300 shadow-lg group relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-wolf-gold text-white text-xs font-bold px-3 py-1 rounded-bl-sm">$16</div>
+          <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🍰</div>
+          <h4 class="font-serif text-2xl font-bold mb-2 group-hover:text-wolf-gold transition-colors">Carrot Cake</h4>
+          <p class="text-sm font-medium opacity-70 mb-4">Dessert in a Glass</p>
+          <div class="w-12 h-0.5 bg-wolf-gold/50 mb-4"></div>
+          <p class="text-sm leading-relaxed font-medium">
+            Bourbon, House-Made Cake Syrup, Ginger, Pimento Dram, Carrot, Egg White, Pecan.
+            <span class="block mt-2 text-xs text-red-600 font-bold">*Contains Nuts</span>
+          </p>
+        </div>
+        
+        <!-- Call to Action Card -->
+        <div class="border-2 border-wolf-gold border-dashed rounded-sm p-8 flex flex-col justify-center items-center text-center hover:bg-white/5 transition-colors cursor-pointer">
+           <div class="text-4xl mb-4 text-wolf-gold">🎲</div>
+           <h4 class="font-serif text-2xl font-bold mb-2">Feeling Adventurous?</h4>
+           <p class="text-sm opacity-80 mb-4">Ask the bartender for the "Dealer's Choice".</p>
+           <span class="text-wolf-gold font-bold uppercase text-xs tracking-widest border border-wolf-gold px-4 py-2 hover:bg-wolf-gold hover:text-wolf-green transition-colors">Surprise Me</span>
+        </div>
+      </div>
+
+      <!-- Classical Riffs Section (Hidden by default) -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto hidden" data-menu-section="classical-riffs">
+        <!-- Riff 1 -->
+        <div class="bg-wolf-cream text-wolf-green p-8 rounded-sm shadow-lg">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif text-xl font-bold">Chai Hard</h4>
+            <span class="font-bold text-wolf-gold">$14</span>
+          </div>
+          <p class="text-xs uppercase tracking-wider font-bold opacity-60 mb-3">Espresso Martini Riff</p>
+          <p class="text-sm font-medium">Tito's Vodka, House-Made Chai Syrup, Coffee Liqueur.</p>
+        </div>
+        <!-- Riff 2 -->
+        <div class="bg-wolf-cream text-wolf-green p-8 rounded-sm shadow-lg">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif text-xl font-bold">Straw Bee Bee</h4>
+            <span class="font-bold text-wolf-gold">$15</span>
+          </div>
+          <p class="text-xs uppercase tracking-wider font-bold opacity-60 mb-3">Bee's Knees Riff</p>
+          <p class="text-sm font-medium">Barr Hill Gin, Honey, Lemon, Strawberry Liqueur.</p>
+        </div>
+        <!-- Riff 3 -->
+        <div class="bg-wolf-cream text-wolf-green p-8 rounded-sm shadow-lg">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif text-xl font-bold">Business As Yuzu-Al</h4>
+            <span class="font-bold text-wolf-gold">$15</span>
+          </div>
+          <p class="text-xs uppercase tracking-wider font-bold opacity-60 mb-3">Yuzu Sour Riff</p>
+          <p class="text-sm font-medium">Roku Gin, Choya Yuzu, Lemon, Sugar, Egg White.</p>
+        </div>
+        <!-- Riff 4 -->
+        <div class="bg-wolf-cream text-wolf-green p-8 rounded-sm shadow-lg">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif text-xl font-bold">Cafe De Olla</h4>
+            <span class="font-bold text-wolf-gold">$16</span>
+          </div>
+          <p class="text-xs uppercase tracking-wider font-bold opacity-60 mb-3">Carajillo Riff</p>
+          <p class="text-sm font-medium">Cacao Washed Mezcal, Licor 43, Coffee Concentrate, Spiced Syrup.</p>
+        </div>
+        <!-- Riff 5 -->
+        <div class="bg-wolf-cream text-wolf-green p-8 rounded-sm shadow-lg">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif text-xl font-bold">Pepiña</h4>
+            <span class="font-bold text-wolf-gold">$15</span>
+          </div>
+          <p class="text-xs uppercase tracking-wider font-bold opacity-60 mb-3">Margarita / Shrub Riff</p>
+          <p class="text-sm font-medium">Tequila, Cucumber-Mint Shrub, Pineapple, Agave, Lime.</p>
+        </div>
+      </div>
+
+      <!-- Beer & Wine Section (Hidden) -->
+      <div class="hidden max-w-4xl mx-auto" data-menu-section="beer-wine">
+        <div class="grid md:grid-cols-2 gap-8">
+           <div class="bg-wolf-cream text-wolf-green p-8 rounded-sm shadow-lg">
+             <h3 class="font-serif text-2xl font-bold mb-6 text-center border-b border-wolf-gold/20 pb-4">Beer</h3>
+             <ul class="space-y-4">
+               <li class="flex justify-between items-center"><span class="font-bold">Dark Horse Boysenberry Seltzer</span> <span class="text-sm opacity-70">$8</span></li>
+               <li class="flex justify-between items-center"><span class="font-bold">Seasonal IPA (Rotating)</span> <span class="text-sm opacity-70">$8</span></li>
+               <li class="flex justify-between items-center"><span class="font-bold">Cali Squeeze Blood Orange</span> <span class="text-sm opacity-70">$7</span></li>
+               <li class="flex justify-between items-center"><span class="font-bold">Firestone 805 Blonde</span> <span class="text-sm opacity-70">$6</span></li>
+               <li class="flex justify-between items-center"><span class="font-bold">Modelo Especial</span> <span class="text-sm opacity-70">$6</span></li>
+             </ul>
+           </div>
+           <div class="bg-wolf-cream text-wolf-green p-8 rounded-sm shadow-lg">
+             <h3 class="font-serif text-2xl font-bold mb-6 text-center border-b border-wolf-gold/20 pb-4">Wine</h3>
+             <ul class="space-y-4">
+               <li class="flex justify-between items-center"><span class="font-bold">Threadcount Red Blend</span> <span class="text-sm opacity-70">$11</span></li>
+               <li class="flex justify-between items-center"><span class="font-bold">Threadcount Sauvignon Blanc</span> <span class="text-sm opacity-70">$11</span></li>
+               <li class="flex justify-between items-center"><span class="font-bold">Campo Viejo Cava (Brut)</span> <span class="text-sm opacity-70">$10</span></li>
+               <li class="flex justify-between items-center"><span class="font-bold">Campo Viejo Rosé</span> <span class="text-sm opacity-70">$10</span></li>
+             </ul>
+           </div>
+        </div>
+      </div>
+
+      <!-- Spirits Section (Refactored to Grid) -->
+      <div class="hidden max-w-6xl mx-auto" data-menu-section="spirits">
+        <div class="space-y-8">
+          <!-- Bourbon -->
+          <div class="bg-wolf-cream text-wolf-green p-8 rounded-sm shadow-lg">
+            <h3 class="font-serif text-2xl font-bold mb-6 flex items-center gap-3"><i class="fas fa-glass-whiskey text-wolf-gold"></i> Bourbon & Whiskey</h3>
+            <ul class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2 text-sm font-medium opacity-80">
+              <li>Angel's Envy</li> <li>Basil Hayden</li> <li>Blanton's</li> <li>Buffalo Trace</li>
+              <li>Bulleit</li> <li>Colonel EH Taylor</li> <li>Eagle Rare</li> <li>Elijah Craig</li>
+              <li>Elmer T Lee</li> <li>Heaven Hill 20yr</li> <li>Makers Mark</li> <li>Michters</li>
+              <li>Whistle Pig 6yr</li> <li>Wild Turkey</li> <li>Woodford Reserve</li> <li>Weller 12yr</li>
+            </ul>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-8">
+            <!-- Tequila -->
+            <div class="bg-wolf-cream text-wolf-green p-8 rounded-sm shadow-lg">
+              <h3 class="font-serif text-xl font-bold mb-4 flex items-center gap-3"><i class="fas fa-pepper-hot text-wolf-gold"></i> Tequila</h3>
+              <ul class="space-y-2 text-sm font-medium opacity-80">
+                <li>Don Julio</li> <li>Fortaleza</li> <li>Casamigos</li> <li>Patrón El Cielo</li>
+                <li>Tequila Ocho</li> <li>Komos Extra Anejo</li> <li>Clase Azul</li>
+              </ul>
+            </div>
+            <!-- Gin -->
+            <div class="bg-wolf-cream text-wolf-green p-8 rounded-sm shadow-lg">
+              <h3 class="font-serif text-xl font-bold mb-4 flex items-center gap-3"><i class="fas fa-lemon text-wolf-gold"></i> Gin</h3>
+              <ul class="space-y-2 text-sm font-medium opacity-80">
+                <li>Empress 1908</li> <li>Hendricks</li> <li>Bombay Sapphire</li> <li>Tanqueray</li>
+                <li>Barr Hill</li> <li>Ford's</li> <li>Monkey 47</li>
+              </ul>
+            </div>
+            <!-- Rum -->
+            <div class="bg-wolf-cream text-wolf-green p-8 rounded-sm shadow-lg">
+              <h3 class="font-serif text-xl font-bold mb-4 flex items-center gap-3"><i class="fas fa-anchor text-wolf-gold"></i> Rum</h3>
+              <ul class="space-y-2 text-sm font-medium opacity-80">
+                <li>Plantation OFTD</li> <li>Ron Zacapa</li> <li>Santa Teresa</li> <li>Don Papa</li>
+                <li>Goslings Black Strap</li> <li>Smith & Cross</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- END: Menu Section -->
+
+  <!-- BEGIN: Events Section -->
+  <section class="bg-wolf-cream py-20 px-6 text-center" id="events">
+    <div class="max-w-4xl mx-auto">
+      <span class="text-wolf-gold font-bold tracking-[0.2em] uppercase text-sm mb-2 block">Live & Loud</span>
+      <h2 class="vintage-title text-4xl font-bold mb-10 text-wolf-green">Upcoming Events</h2>
+      
+      <div class="grid md:grid-cols-2 gap-8 items-start">
+        <!-- Event Image Toggle Container -->
+        <div class="relative">
+          <div id="event-image-week-container" class="group relative rounded-sm overflow-hidden shadow-2xl transition-all duration-500">
+             <div class="absolute inset-0 bg-wolf-green/10 group-hover:bg-transparent transition-colors z-10"></div>
+             <img id="event-image-week" alt="This Week Events" class="w-full transform group-hover:scale-105 transition-transform duration-700 event-image" src="images/This Week.jpg"/>
+             <div class="absolute bottom-0 left-0 w-full bg-wolf-green/90 text-wolf-cream p-3 z-20 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+               <span class="font-bold uppercase tracking-widest text-xs">View Full Flyer</span>
+             </div>
+          </div>
+          <div id="event-image-month-container" class="group relative rounded-sm overflow-hidden shadow-2xl hidden transition-all duration-500">
+             <div class="absolute inset-0 bg-wolf-green/10 group-hover:bg-transparent transition-colors z-10"></div>
+             <img id="event-image-month" alt="This Month Events" class="w-full transform group-hover:scale-105 transition-transform duration-700 event-image" src="images/This Month.jpg"/>
+             <div class="absolute bottom-0 left-0 w-full bg-wolf-green/90 text-wolf-cream p-3 z-20 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+               <span class="font-bold uppercase tracking-widest text-xs">View Full Flyer</span>
+             </div>
+          </div>
+
+          <button id="event-image-toggle" class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-wolf-gold text-wolf-green px-4 py-2 rounded-full shadow-lg font-bold uppercase text-xs tracking-wider hover:bg-wolf-green hover:text-wolf-gold transition-colors transform hover:-translate-y-1">
+            Show Monthly Events
+          </button>
+        </div>
+        
+        <!-- Weekly Schedule Text -->
+        <div class="bg-white p-8 rounded-sm shadow-lg text-left border-t-4 border-wolf-gold">
+          <h3 class="font-serif text-2xl font-bold mb-6 text-wolf-green flex items-center gap-2">
+            <span class="text-wolf-gold">●</span> Weekly Lineup
+          </h3>
+          <div class="space-y-6">
+            <div class="flex gap-4 items-start pb-4 border-b border-gray-100">
+              <div class="bg-wolf-green text-wolf-gold font-bold p-2 rounded w-14 text-center text-sm leading-tight">
+                THU<br/><span class="text-white">8PM</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-lg text-wolf-green">Lovers Lounge</h4>
+                <p class="text-sm opacity-70">Dali</p>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start pb-4 border-b border-gray-100">
+              <div class="bg-wolf-green text-wolf-gold font-bold p-2 rounded w-14 text-center text-sm leading-tight">
+                FRI<br/><span class="text-white">9PM</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-lg text-wolf-green">Backyard Boogie</h4>
+                <p class="text-sm opacity-70">KG559</p>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start pb-4 border-b border-gray-100">
+              <div class="bg-wolf-green text-wolf-gold font-bold p-2 rounded w-14 text-center text-sm leading-tight">
+                SAT<br/><span class="text-white">9PM</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-lg text-wolf-green">Rayford Bros</h4>
+                <p class="text-sm opacity-70">Live performance</p>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start">
+              <div class="bg-wolf-green text-wolf-gold font-bold p-2 rounded w-14 text-center text-sm leading-tight">
+                SUN<br/><span class="text-white">5-8PM</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-lg text-wolf-green">Subale / Juarez Colab</h4>
+                <p class="text-sm opacity-70">Collaborative performance</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-8 pt-4">
+             <a href="https://www.instagram.com/the.howlin.wolf.fresno/" target="_blank" class="block w-full py-3 text-center border-2 border-wolf-green text-wolf-green font-bold uppercase tracking-widest hover:bg-wolf-green hover:text-wolf-gold transition-colors text-sm rounded-sm">
+               <i class="fab fa-instagram mr-2"></i> Check Instagram for Updates
+             </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Newsletter Signup -->
+      <div class="bg-wolf-green text-wolf-cream mt-20 py-12 px-6 rounded-sm max-w-3xl mx-auto relative overflow-hidden shadow-2xl">
+        <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-wolf-gold opacity-10 rounded-full blur-3xl"></div>
+        <div class="relative z-10">
+          <h3 class="vintage-title text-3xl mb-2 text-wolf-gold">Join The Pack</h3>
+          <p class="mb-8 opacity-80 max-w-md mx-auto">Sign up for our newsletter to get secret menu codes, event presales, and birthday treats.</p>
+          <form class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto" onsubmit="event.preventDefault(); alert('Thanks for joining the pack!');">
+            <input type="email" placeholder="Enter your email address..." class="flex-1 px-4 py-3 text-wolf-green rounded-sm focus:ring-2 focus:ring-wolf-gold outline-none" required>
+            <button type="submit" class="bg-wolf-gold text-wolf-green font-bold uppercase tracking-widest px-8 py-3 rounded-sm hover:bg-white transition-colors shadow-lg">
+              Join
+            </button>
+          </form>
+          <p class="text-[10px] opacity-40 mt-4">We respect your inbox. No spam, just spirits.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- END: Events Section -->
+
+  <!-- BEGIN: Contact & Footer -->
+  <footer class="bg-wolf-dark text-wolf-cream pt-20 pb-8 px-6 border-t border-wolf-gold/20" id="contact">
+    <div class="container mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-12 mb-16">
+      <!-- Info Column -->
+      <div class="space-y-6">
+        <h2 class="vintage-title text-3xl font-bold text-wolf-gold mb-6">Contact & Hours</h2>
+        
+        <div class="space-y-4 text-sm font-medium opacity-90">
+          <div class="flex items-start gap-4">
+            <i class="fas fa-clock mt-1 text-wolf-gold"></i>
+            <div>
+              <p class="font-bold text-white">Hours of Operation</p>
+              <p>Mon - Thu: 3pm — 12am</p>
+              <p>Fri - Sat: 3pm — 2am</p>
+              <p>Sun: 3pm — 12am</p>
+              <p class="text-wolf-gold mt-1 font-bold">Happy Hour: Daily 3pm–6pm</p>
+            </div>
+          </div>
+          
+          <div class="flex items-center gap-4">
+            <i class="fas fa-phone text-wolf-gold"></i>
+            <a href="tel:5593198545" class="hover:text-wolf-gold transition-colors">559-319-8545</a>
+          </div>
+          
+          <div class="flex items-center gap-4">
+            <i class="fas fa-envelope text-wolf-gold"></i>
+            <a href="mailto:gm@howlinwolfcocktails.com" class="hover:text-wolf-gold transition-colors">gm@howlinwolfcocktails.com</a>
+          </div>
+          
+          <div class="flex items-center gap-4">
+             <i class="fas fa-map-pin text-wolf-gold"></i>
+             <span>920 E Olive Ave, Fresno, CA 93721</span>
+          </div>
+          
+          <div class="pt-4 flex gap-4">
+            <a href="https://www.facebook.com/thehowlinwolffresno/" class="w-10 h-10 rounded-full bg-wolf-cream/10 flex items-center justify-center hover:bg-wolf-gold hover:text-wolf-green transition-all"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/the.howlin.wolf.fresno/" class="w-10 h-10 rounded-full bg-wolf-cream/10 flex items-center justify-center hover:bg-wolf-gold hover:text-wolf-green transition-all"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/" class="w-10 h-10 rounded-full bg-wolf-cream/10 flex items-center justify-center hover:bg-wolf-gold hover:text-wolf-green transition-all"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Map Column -->
+      <div class="lg:col-span-2">
+        <div class="w-full aspect-video relative rounded-sm overflow-hidden shadow-2xl border border-wolf-cream/10 group">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12806.500000000002!2d-119.786499!3d36.7375!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s920%20E%20Olive%20Ave%2C%20Fresno%2C%20CA%2093721!5e0!3m2!1sen!2sus!4v1646000000000!5m2!1sen!2sus" 
+            width="100%" 
+            height="100%" 
+            style="border:0; filter: grayscale(1) contrast(1.2);" 
+            allowfullscreen="" 
+            loading="lazy"
+            title="Location Map"
+            class="group-hover:filter-none transition-all duration-700">
+          </iframe>
+          <div class="absolute bottom-4 right-4">
+            <a href="https://maps.google.com/maps?q=920+E+Olive+Ave,+Fresno,+CA+93721" target="_blank" class="bg-wolf-gold text-wolf-green font-bold text-xs uppercase px-4 py-2 rounded-sm shadow-lg hover:bg-white transition-colors">
+              <i class="fas fa-directions mr-1"></i> Get Directions
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Footer Bottom -->
+    <div class="text-center border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs opacity-50">
+      <p>© 2026 The Howlin' Wolf. All Rights Reserved.</p>
+      <div class="flex gap-4">
+        <a href="#" class="hover:text-wolf-gold">Privacy Policy</a>
+        <a href="#" class="hover:text-wolf-gold">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+  <!-- END: Contact & Footer -->
+
+  <!-- Back to Top Button -->
+  <a href="#top" id="backToTop" class="fixed bottom-8 right-8 bg-wolf-gold text-wolf-green p-3 rounded-full shadow-lg translate-y-20 opacity-0 transition-all duration-300 z-40 hover:scale-110">
+    <i class="fas fa-arrow-up"></i>
+  </a>
+
+  <!-- Functionality Scripts -->
+  <script>
+    // 1. Navigation & Scroll Effects
+    const nav = document.getElementById('main-nav');
+    const backToTop = document.getElementById('backToTop');
+    const scrolledLogo = document.getElementById('scrolled-logo');
+    const initialLogoText = document.getElementById('initial-logo-text');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        nav.classList.add('nav-scrolled');
+        backToTop.classList.remove('translate-y-20', 'opacity-0');
+        // Hide initial logo text and show scrolled logo for desktop
+        if (window.innerWidth >= 768) { // md breakpoint for Tailwind CSS
+          initialLogoText.classList.add('hidden');
+          scrolledLogo.classList.remove('hidden');
+        }
+      } else {
+        nav.classList.remove('nav-scrolled');
+        backToTop.classList.add('translate-y-20', 'opacity-0');
+        // Show initial logo text and hide scrolled logo for desktop
+        if (window.innerWidth >= 768) { // md breakpoint for Tailwind CSS
+          initialLogoText.classList.remove('hidden');
+          scrolledLogo.classList.add('hidden');
+        }
+      }
+    });
+
+    // 2. Mobile Menu Toggle
+    const menuBtn = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      const icon = menuBtn.querySelector('i');
+      if (mobileMenu.classList.contains('hidden')) {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      } else {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      }
+    });
+
+    // 3. Menu Tabs Logic
+    const menuTabs = document.querySelectorAll('.menu-tab');
+    const menuSections = document.querySelectorAll('[data-menu-section]');
+    
+    menuTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Reset tabs
+        menuTabs.forEach(t => {
+          t.classList.remove('border-wolf-gold', 'text-wolf-gold');
+          t.classList.add('border-transparent', 'text-white/60');
+          t.classList.remove('active');
+        });
+        
+        // Activate clicked tab
+        tab.classList.remove('border-transparent', 'text-white/60');
+        tab.classList.add('border-wolf-gold', 'text-wolf-gold');
+        tab.classList.add('active');
+        
+        // Show section
+        const target = tab.dataset.menuBtn;
+        menuSections.forEach(sec => {
+          if(sec.dataset.menuSection === target) {
+            sec.classList.remove('hidden');
+            sec.classList.add('animate-fadeIn');
+          } else {
+            sec.classList.add('hidden');
+            sec.classList.remove('animate-fadeIn');
+          }
+        });
+      });
+    });
+
+    // 4. About Read More Toggle
+    const aboutToggle = document.getElementById('about-toggle');
+    const aboutExpanded = document.getElementById('about-expanded');
+    
+    aboutToggle.addEventListener('click', () => {
+      aboutExpanded.classList.toggle('hidden');
+      const textSpan = aboutToggle.querySelector('span');
+      const icon = aboutToggle.querySelector('i');
+      
+      if(aboutExpanded.classList.contains('hidden')) {
+        textSpan.textContent = 'Read More';
+        icon.classList.remove('rotate-90');
+      } else {
+        textSpan.textContent = 'Read Less';
+        icon.classList.add('rotate-90');
+      }
+    });
+
+    // 5. Hero Slideshow (Preserved)
+    const slides = document.querySelectorAll('.slideshow-slide');
+    let currentSlide = 0;
+    
+    function nextSlide() {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+    
+    setInterval(nextSlide, 5000);
+
+    // 6. Event Image Toggle
+    const eventImageToggle = document.getElementById('event-image-toggle');
+    const eventImageWeekContainer = document.getElementById('event-image-week-container');
+    const eventImageMonthContainer = document.getElementById('event-image-month-container');
+
+    eventImageToggle.addEventListener('click', () => {
+      if (eventImageWeekContainer.classList.contains('hidden')) {
+        // Currently showing month, switch to week
+        eventImageMonthContainer.classList.add('hidden');
+        eventImageWeekContainer.classList.remove('hidden');
+        eventImageToggle.textContent = 'Show Monthly Events';
+      } else {
+        // Currently showing week, switch to month
+        eventImageWeekContainer.classList.add('hidden');
+        eventImageMonthContainer.classList.remove('hidden');
+        eventImageToggle.textContent = 'Show Weekly Events';
+      }
+    });
+  </script>
+</body>
+</html>
