@@ -55,6 +55,58 @@
     ::-webkit-scrollbar {
       width: 8px;
     }
+
+    /* Noise Overlay */
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiling='true'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Custom Cursor */
+    .custom-cursor {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #A68946;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 10000;
+      transition: transform 0.1s ease-out, width 0.3s, height 0.3s;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-hover {
+      width: 40px;
+      height: 40px;
+      background-color: rgba(166, 137, 70, 0.2);
+    }
+
+    /* Double Border Decoration */
+    .double-border {
+      border: 3px solid #A68946;
+      outline: 1px solid #A68946;
+      outline-offset: -6px;
+    }
+    
+    /* Parallax Effect */
+    .parallax-bg {
+      transition: transform 0.1s ease-out;
+    }
+
+    /* Reveal on Scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease-out;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     ::-webkit-scrollbar-track {
       background: #F9F4E8;
     }
@@ -90,11 +142,22 @@
         transition: all 0.3s ease-in-out;
     }
     .nav-scrolled {
-      background-color: rgba(45, 57, 33, 0.95);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      padding-top: 0.75rem !important;
-      padding-bottom: 0.75rem !important;
+      background-color: rgba(45, 57, 33, 0.85);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+      padding-top: 0.5rem !important;
+      padding-bottom: 0.5rem !important;
+    }
+
+    /* Secret Reveal Styles */
+    @keyframes secretReveal {
+      0% { opacity: 0; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.1); filter: brightness(1.5) gold; }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .animate-secret {
+      animation: secretReveal 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
     
     /* Smooth Scroll Behavior */
@@ -178,7 +241,7 @@
     
     <!-- Hero Content -->
     <div class="relative z-20 text-center text-white px-6 max-w-4xl mx-auto mt-16 animate-slideUp">
-      <img alt="The Howlin' Wolf Logo" class="w-32 h-32 md:w-48 md:h-48 mx-auto mb-6 drop-shadow-2xl hover:scale-105 transition-transform duration-500" src="images/THW-logo-white.webp"/>
+      <img id="hero-logo" alt="The Howlin' Wolf Logo" class="w-32 h-32 md:w-48 md:h-48 mx-auto mb-6 drop-shadow-2xl cursor-pointer hover:scale-105 transition-transform duration-500" src="images/THW-logo-white.webp"/>
       
       <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl mb-4 text-wolf-cream drop-shadow-lg leading-tight">
         Craft Cocktails<br/><span class="text-wolf-gold">&amp;</span> Good Times
@@ -275,6 +338,7 @@
         <button class="menu-tab px-6 py-2 border-b-2 border-transparent text-white/60 hover:text-white font-bold uppercase tracking-widest transition-all" data-menu-btn="classical-riffs">Riffs</button>
         <button class="menu-tab px-6 py-2 border-b-2 border-transparent text-white/60 hover:text-white font-bold uppercase tracking-widest transition-all" data-menu-btn="beer-wine">Beer & Wine</button>
         <button class="menu-tab px-6 py-2 border-b-2 border-transparent text-white/60 hover:text-white font-bold uppercase tracking-widest transition-all" data-menu-btn="spirits">Spirits</button>
+        <button id="speakeasy-tab" class="menu-tab px-6 py-2 border-b-2 border-transparent text-wolf-gold/40 hover:text-wolf-gold font-bold uppercase tracking-widest transition-all hidden opacity-0" data-menu-btn="speakeasy">???</button>
       </nav>
 
       <!-- Signature Section -->
@@ -465,6 +529,53 @@
           </div>
         </div>
       </div>
+
+      <!-- Speakeasy Secret Section (Hidden) -->
+      <div class="hidden max-w-6xl mx-auto" data-menu-section="speakeasy">
+        <div class="text-center mb-12">
+          <i class="fas fa-key text-wolf-gold text-3xl mb-4 animate-pulse"></i>
+          <h3 class="vintage-title text-3xl text-wolf-gold">The Underground Collection</h3>
+          <p class="text-wolf-cream/60 text-sm uppercase tracking-[0.3em] mt-2">Off-Menu Exclusives • Limited Availability</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Secret Drink 1 -->
+          <div class="bg-black/40 border border-wolf-gold/30 p-8 rounded-sm hover:border-wolf-gold transition-all duration-500 group relative overflow-hidden">
+            <div class="absolute top-0 right-0 bg-wolf-gold text-wolf-dark text-[10px] font-bold px-3 py-1 uppercase tracking-tighter">Rare</div>
+            <h4 class="font-serif text-2xl font-bold mb-2 text-wolf-gold group-hover:tracking-wider transition-all">The Widow's Kiss</h4>
+            <p class="text-xs uppercase tracking-widest text-wolf-cream/40 mb-4">Herbal • Spirit-Forward • Complex</p>
+            <div class="w-full h-px bg-gradient-to-r from-wolf-gold/50 to-transparent mb-4"></div>
+            <p class="text-sm leading-relaxed text-wolf-cream/80 italic">
+              Calvados, Yellow Chartreuse, Benedictine, and Angostura Bitters. A 19th-century masterpiece.
+            </p>
+            <div class="mt-6 text-wolf-gold font-bold">$18</div>
+          </div>
+          
+          <!-- Secret Drink 2 -->
+          <div class="bg-black/40 border border-wolf-gold/30 p-8 rounded-sm hover:border-wolf-gold transition-all duration-500 group relative overflow-hidden">
+            <div class="absolute top-0 right-0 bg-wolf-gold text-wolf-dark text-[10px] font-bold px-3 py-1 uppercase tracking-tighter">Bold</div>
+            <h4 class="font-serif text-2xl font-bold mb-2 text-wolf-gold group-hover:tracking-wider transition-all">Gulf Stream</h4>
+            <p class="text-xs uppercase tracking-widest text-wolf-cream/40 mb-4">Tart • Bracing • Aromatic</p>
+            <div class="w-full h-px bg-gradient-to-r from-wolf-gold/50 to-transparent mb-4"></div>
+            <p class="text-sm leading-relaxed text-wolf-cream/80 italic">
+              Death In The Gulf Stream: Genever Gin, Lime Juice, Sugar, and heavy Angostura Bitters. Hemingway's cure.
+            </p>
+            <div class="mt-6 text-wolf-gold font-bold">$17</div>
+          </div>
+
+          <!-- Secret Drink 3 -->
+          <div class="bg-black/40 border border-wolf-gold/30 p-8 rounded-sm hover:border-wolf-gold transition-all duration-500 group relative overflow-hidden">
+            <div class="absolute top-0 right-0 bg-wolf-gold text-wolf-dark text-[10px] font-bold px-3 py-1 uppercase tracking-tighter">Iconic</div>
+            <h4 class="font-serif text-2xl font-bold mb-2 text-wolf-gold group-hover:tracking-wider transition-all">Hanky Panky</h4>
+            <p class="text-xs uppercase tracking-widest text-wolf-cream/40 mb-4">Sultry • Bittersweet • Timeless</p>
+            <div class="w-full h-px bg-gradient-to-r from-wolf-gold/50 to-transparent mb-4"></div>
+            <p class="text-sm leading-relaxed text-wolf-cream/80 italic">
+              London Dry Gin, Sweet Vermouth, and Fernet-Branca. Created by Ada Coleman at the Savoy.
+            </p>
+            <div class="mt-6 text-wolf-gold font-bold">$16</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
   <!-- END: Menu Section -->
@@ -539,7 +650,7 @@
           </div>
           
           <div class="mt-8 pt-4">
-             <a href="https://www.instagram.com/the.howlin.wolf.fresno/" target="_blank" class="block w-full py-3 text-center border-2 border-wolf-green text-wolf-green font-bold uppercase tracking-widest hover:bg-wolf-green hover:text-wolf-gold transition-colors text-sm rounded-sm">
+             <a href="https://www.instagram.com/the.howlin.wolf.fresno/" target="_blank" rel="noopener" class="block w-full py-3 text-center border-2 border-wolf-green text-wolf-green font-bold uppercase tracking-widest hover:bg-wolf-green hover:text-wolf-gold transition-colors text-sm rounded-sm">
                <i class="fab fa-instagram mr-2"></i> Check Instagram for Updates
              </a>
           </div>
@@ -563,7 +674,7 @@
           </div>
           
           <div class="mt-8 pt-4">
-             <a href="https://www.instagram.com/the.howlin.wolf.fresno/" target="_blank" class="block w-full py-3 text-center border-2 border-wolf-green text-wolf-green font-bold uppercase tracking-widest hover:bg-wolf-green hover:text-wolf-gold transition-colors text-sm rounded-sm">
+             <a href="https://www.instagram.com/the.howlin.wolf.fresno/" target="_blank" rel="noopener" class="block w-full py-3 text-center border-2 border-wolf-green text-wolf-green font-bold uppercase tracking-widest hover:bg-wolf-green hover:text-wolf-gold transition-colors text-sm rounded-sm">
                <i class="fab fa-instagram mr-2"></i> Join the pack on Instagram
              </a>
           </div>
@@ -645,7 +756,7 @@
             class="group-hover:filter-none transition-all duration-700">
           </iframe>
           <div class="absolute bottom-4 right-4">
-            <a href="https://maps.google.com/maps?q=920+E+Olive+Ave,+Fresno,+CA+93721" target="_blank" class="bg-wolf-gold text-wolf-green font-bold text-xs uppercase px-4 py-2 rounded-sm shadow-lg hover:bg-white transition-colors">
+            <a href="https://maps.google.com/maps?q=920+E+Olive+Ave,+Fresno,+CA+93721" target="_blank" rel="noopener" class="bg-wolf-gold text-wolf-green font-bold text-xs uppercase px-4 py-2 rounded-sm shadow-lg hover:bg-white transition-colors">
               <i class="fas fa-directions mr-1"></i> Get Directions
             </a>
           </div>
@@ -799,6 +910,147 @@
           eventLineupMonthly.classList.remove('hidden');
         }
       });
+    });
+
+    // 7. Speakeasy Secret Trigger
+    const heroLogo = document.getElementById('hero-logo');
+    const speakeasyTab = document.getElementById('speakeasy-tab');
+    let clickCount = 0;
+    let lastClickTime = 0;
+
+    // Helper: show speakeasy tab cleanly (no animation, for restoring state)
+    function showSpeakeasyTabSilently() {
+        speakeasyTab.classList.remove('hidden', 'opacity-0');
+        speakeasyTab.classList.add('text-wolf-gold/70');
+    }
+
+    // Helper: activate speakeasy tab (switch to its menu section)
+    function activateSpeakeasyTab() {
+        // Reset all tabs using the same logic as the menu tab click handler,
+        // but explicitly restore speakeasy tab's gold tint afterward
+        menuTabs.forEach(t => {
+            t.classList.remove('border-wolf-gold', 'text-wolf-gold', 'active');
+            // Only apply the generic "inactive" white style to non-speakeasy tabs
+            if (t !== speakeasyTab) {
+                t.classList.add('border-transparent', 'text-white/60');
+            }
+        });
+
+        // Activate speakeasy tab
+        speakeasyTab.classList.remove('border-transparent');
+        speakeasyTab.classList.add('border-wolf-gold', 'text-wolf-gold', 'active');
+
+        // Show speakeasy section, hide all others
+        menuSections.forEach(sec => {
+            if (sec.dataset.menuSection === 'speakeasy') {
+                sec.classList.remove('hidden');
+                sec.classList.add('animate-fadeIn');
+            } else {
+                sec.classList.add('hidden');
+                sec.classList.remove('animate-fadeIn');
+            }
+        });
+    }
+
+    // Check if already found — restore silently, no animation replay
+    if (localStorage.getItem('speakeasy_found') === 'true') {
+        showSpeakeasyTabSilently();
+    }
+
+    // Per-click logo pulse feedback
+    function pulseLogoHint() {
+        heroLogo.classList.add('brightness-125');
+        heroLogo.style.filter = 'drop-shadow(0 0 12px rgba(166,137,70,0.8))';
+        setTimeout(() => {
+            heroLogo.style.filter = '';
+        }, 300);
+    }
+
+    heroLogo.addEventListener('click', () => {
+        const currentTime = new Date().getTime();
+
+        if (currentTime - lastClickTime < 800) {
+            clickCount++;
+        } else {
+            clickCount = 1;
+        }
+
+        lastClickTime = currentTime;
+
+        // Give subtle gold glow feedback on each click
+        pulseLogoHint();
+
+        if (clickCount >= 3) {
+            revealSecret();
+            clickCount = 0; // Reset
+        }
+    });
+
+    function revealSecret() {
+        const alreadyFound = localStorage.getItem('speakeasy_found') === 'true';
+
+        // Visual feedback on logo
+        heroLogo.classList.add('scale-110', 'rotate-3');
+        setTimeout(() => heroLogo.classList.remove('scale-110', 'rotate-3'), 500);
+
+        if (!alreadyFound) {
+            // First discovery: animate the tab reveal
+            speakeasyTab.classList.remove('hidden', 'opacity-0');
+            speakeasyTab.classList.add('animate-secret');
+            localStorage.setItem('speakeasy_found', 'true');
+            console.log("Welcome to the Underground Collection.");
+        }
+
+        // Scroll to menu section and activate the speakeasy tab
+        setTimeout(() => {
+            document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+            // Wait for scroll to settle before switching tab
+            setTimeout(activateSpeakeasyTab, 600);
+        }, alreadyFound ? 0 : 800);
+    }
+
+    // FIX: Patch the menu tab reset loop so it never clobbers the speakeasy tab's gold tint
+    // Re-wire tab clicks to preserve speakeasy tab styling when it's visible
+    menuTabs.forEach(tab => {
+        // Clone to remove old listener, then re-add corrected one
+        const newTab = tab.cloneNode(true);
+        tab.parentNode.replaceChild(newTab, tab);
+    });
+
+    // Re-query after DOM replacement
+    const freshMenuTabs = document.querySelectorAll('.menu-tab');
+    const freshSpeakeasyTab = document.getElementById('speakeasy-tab');
+
+    freshMenuTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Reset all tabs
+            freshMenuTabs.forEach(t => {
+                t.classList.remove('border-wolf-gold', 'text-wolf-gold', 'active');
+                if (t !== freshSpeakeasyTab) {
+                    t.classList.add('border-transparent', 'text-white/60');
+                } else {
+                    // Keep speakeasy tab's gold tint when not active
+                    t.classList.add('border-transparent');
+                    t.classList.remove('text-white/60');
+                }
+            });
+
+            // Activate clicked tab
+            tab.classList.remove('border-transparent', 'text-white/60', 'text-wolf-gold/40');
+            tab.classList.add('border-wolf-gold', 'text-wolf-gold', 'active');
+
+            // Show matching section
+            const target = tab.dataset.menuBtn;
+            menuSections.forEach(sec => {
+                if (sec.dataset.menuSection === target) {
+                    sec.classList.remove('hidden');
+                    sec.classList.add('animate-fadeIn');
+                } else {
+                    sec.classList.add('hidden');
+                    sec.classList.remove('animate-fadeIn');
+                }
+            });
+        });
     });
   </script>
 </body>
