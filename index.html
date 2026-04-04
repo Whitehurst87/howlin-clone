@@ -473,10 +473,16 @@
   <section class="bg-wolf-cream py-20 px-6 text-center" id="events">
     <div class="max-w-4xl mx-auto">
       <span class="text-wolf-gold font-bold tracking-[0.2em] uppercase text-sm mb-2 block">Live & Loud</span>
-      <h2 class="vintage-title text-4xl font-bold mb-10 text-wolf-green">Upcoming Events</h2>
+      <h2 class="vintage-title text-4xl font-bold mb-6 text-wolf-green">Upcoming Events</h2>
       
+      <!-- Event Tabs Navigation -->
+      <nav class="flex justify-center gap-4 mb-10" data-purpose="event-navigation">
+        <button class="event-tab active px-6 py-2 border-b-2 border-wolf-gold text-wolf-gold font-bold uppercase tracking-widest transition-all" data-event-btn="weekly">Weekly</button>
+        <button class="event-tab px-6 py-2 border-b-2 border-transparent text-wolf-green/60 hover:text-wolf-green font-bold uppercase tracking-widest transition-all" data-event-btn="monthly">Monthly</button>
+      </nav>
+
       <div class="grid md:grid-cols-2 gap-8 items-start">
-        <!-- Event Image Toggle Container -->
+        <!-- Event Image Container -->
         <div class="relative">
           <div id="event-image-week-container" class="group relative rounded-sm overflow-hidden shadow-2xl transition-all duration-500">
              <div class="absolute inset-0 bg-wolf-green/10 group-hover:bg-transparent transition-colors z-10"></div>
@@ -486,14 +492,10 @@
              <div class="absolute inset-0 bg-wolf-green/10 group-hover:bg-transparent transition-colors z-10"></div>
              <img id="event-image-month" alt="This Month Events" class="w-full transform group-hover:scale-105 transition-transform duration-700 event-image" src="images/This Month.jpg"/>
           </div>
-
-          <button id="event-image-toggle" class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-wolf-gold text-wolf-green px-4 py-2 rounded-full shadow-lg font-bold uppercase text-xs tracking-wider hover:bg-wolf-green hover:text-wolf-gold transition-colors transform hover:-translate-y-1">
-            Show Monthly Events
-          </button>
         </div>
         
         <!-- Weekly Schedule Text -->
-        <div class="bg-white p-8 rounded-sm shadow-lg text-left border-t-4 border-wolf-gold">
+        <div id="event-lineup-weekly" class="bg-white p-8 rounded-sm shadow-lg text-left border-t-4 border-wolf-gold">
           <h3 class="font-serif text-2xl font-bold mb-6 text-wolf-green flex items-center gap-2">
             <span class="text-wolf-gold">●</span> Weekly Lineup
           </h3>
@@ -539,6 +541,30 @@
           <div class="mt-8 pt-4">
              <a href="https://www.instagram.com/the.howlin.wolf.fresno/" target="_blank" class="block w-full py-3 text-center border-2 border-wolf-green text-wolf-green font-bold uppercase tracking-widest hover:bg-wolf-green hover:text-wolf-gold transition-colors text-sm rounded-sm">
                <i class="fab fa-instagram mr-2"></i> Check Instagram for Updates
+             </a>
+          </div>
+        </div>
+
+        <!-- Monthly Schedule Text (Hidden) -->
+        <div id="event-lineup-monthly" class="bg-white p-8 rounded-sm shadow-lg text-left border-t-4 border-wolf-gold hidden">
+          <h3 class="font-serif text-2xl font-bold mb-6 text-wolf-green flex items-center gap-2">
+            <span class="text-wolf-gold">●</span> Monthly Calendar
+          </h3>
+          <div class="space-y-6">
+            <p class="text-wolf-green text-lg leading-relaxed">
+              Our monthly calendar is packed with artist residencies, themed takeovers, and special performance series.
+            </p>
+            <div class="bg-wolf-cream/50 p-4 rounded-sm border-l-4 border-wolf-gold italic">
+              "Every night is a new story at The Howlin' Wolf."
+            </div>
+            <p class="text-sm opacity-80">
+              Check the calendar image for specific dates and times. We recommend following our Instagram for last-minute additions and secret show announcements.
+            </p>
+          </div>
+          
+          <div class="mt-8 pt-4">
+             <a href="https://www.instagram.com/the.howlin.wolf.fresno/" target="_blank" class="block w-full py-3 text-center border-2 border-wolf-green text-wolf-green font-bold uppercase tracking-widest hover:bg-wolf-green hover:text-wolf-gold transition-colors text-sm rounded-sm">
+               <i class="fab fa-instagram mr-2"></i> Join the pack on Instagram
              </a>
           </div>
         </div>
@@ -649,25 +675,14 @@
     const nav = document.getElementById('main-nav');
     const backToTop = document.getElementById('backToTop');
     const scrolledLogo = document.getElementById('scrolled-logo');
-    const initialLogoText = document.getElementById('initial-logo-text');
 
     window.addEventListener('scroll', () => {
       if (window.scrollY > 50) {
         nav.classList.add('nav-scrolled');
         backToTop.classList.remove('translate-y-20', 'opacity-0');
-        // Hide initial logo text and show scrolled logo for desktop
-        if (window.innerWidth >= 768) { // md breakpoint for Tailwind CSS
-          initialLogoText.classList.add('hidden');
-          scrolledLogo.classList.remove('hidden');
-        }
       } else {
         nav.classList.remove('nav-scrolled');
         backToTop.classList.add('translate-y-20', 'opacity-0');
-        // Show initial logo text and hide scrolled logo for desktop
-        if (window.innerWidth >= 768) { // md breakpoint for Tailwind CSS
-          initialLogoText.classList.remove('hidden');
-          scrolledLogo.classList.add('hidden');
-        }
       }
     });
 
@@ -749,23 +764,41 @@
     
     setInterval(nextSlide, 5000);
 
-    // 6. Event Image Toggle
-    const eventImageToggle = document.getElementById('event-image-toggle');
+    // 6. Event Tabs Logic
+    const eventTabs = document.querySelectorAll('.event-tab');
     const eventImageWeekContainer = document.getElementById('event-image-week-container');
     const eventImageMonthContainer = document.getElementById('event-image-month-container');
+    const eventLineupWeekly = document.getElementById('event-lineup-weekly');
+    const eventLineupMonthly = document.getElementById('event-lineup-monthly');
 
-    eventImageToggle.addEventListener('click', () => {
-      if (eventImageWeekContainer.classList.contains('hidden')) {
-        // Currently showing month, switch to week
-        eventImageMonthContainer.classList.add('hidden');
-        eventImageWeekContainer.classList.remove('hidden');
-        eventImageToggle.textContent = 'Show Monthly Events';
-      } else {
-        // Currently showing week, switch to month
-        eventImageWeekContainer.classList.add('hidden');
-        eventImageMonthContainer.classList.remove('hidden');
-        eventImageToggle.textContent = 'Show Weekly Events';
-      }
+    eventTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Reset tabs
+        eventTabs.forEach(t => {
+          t.classList.remove('border-wolf-gold', 'text-wolf-gold');
+          t.classList.add('border-transparent', 'text-wolf-green/60');
+          t.classList.remove('active');
+        });
+        
+        // Activate clicked tab
+        tab.classList.remove('border-transparent', 'text-wolf-green/60');
+        tab.classList.add('border-wolf-gold', 'text-wolf-gold');
+        tab.classList.add('active');
+        
+        // Show content
+        const target = tab.dataset.eventBtn;
+        if (target === 'weekly') {
+          eventImageWeekContainer.classList.remove('hidden');
+          eventImageMonthContainer.classList.add('hidden');
+          eventLineupWeekly.classList.remove('hidden');
+          eventLineupMonthly.classList.add('hidden');
+        } else {
+          eventImageWeekContainer.classList.add('hidden');
+          eventImageMonthContainer.classList.remove('hidden');
+          eventLineupWeekly.classList.add('hidden');
+          eventLineupMonthly.classList.remove('hidden');
+        }
+      });
     });
   </script>
 </body>
